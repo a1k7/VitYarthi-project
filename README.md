@@ -5,7 +5,7 @@ Managing a chaotic "Downloads" or workspace folder is a repetitive task that was
 
 ## 🚀 Key Features
 * **Dictionary-Based Sorting:** Utilizes a robust Hash Map (Dictionary) to link over 40+ file extensions (e.g., `.py`, `.docx`, `.flac`) to their respective parent categories.
-* **Temporal Archiving Logic:** Implements a time-decay algorithm that calculates the delta between `time.time()` and the file's `st_mtime`. Files exceeding the **8.64 million second** threshold (100 days) are automatically archived.
+* **Temporal Archiving Logic:** Implements a time-decay algorithm that calculates the delta between `CURRENT TIME` and the file's `MODIFICATION TIME`. Files exceeding the **8.64 million second** threshold (100 days) are automatically archived.
 * **Interactive Clean-up:** The script doesn't just move files; it communicates with the user via the console, asking for permission to purge empty archive folders after operations are complete.
 * **Safe-Fail Execution:** Uses `try-except` blocks around `shutil` operations to prevent the script from crashing due to permission errors or open files.
 
