@@ -1,0 +1,138 @@
+import os
+from pathlib import Path
+import shutil
+import time
+home_directory=Path.home()
+
+
+download_directory = home_directory/"Library/CloudStorage/OneDrive-Personal/vit stuff"
+# Create the directory if it doesn't exist
+File_extension={
+    ".jpeg":"IMAGE",
+    ".jpg":"IMAGE",
+    ".png":"IMAGE",
+    ".gif":"IMAGE",
+    ".svg":"IMAGE",
+    ".tif":"IMAGE",
+    ".tiff":"IMAGE",
+    ".cr2":"IMAGE",
+    ".nef":"IMAGE",
+    ".arw":"IMAGE",
+    ".heif":"IMAGE",
+    ".avif":"IMAGE",
+
+
+    ".pdf":"DOCUMENT",
+    ".doc":"DOCUMENT",
+    ".docx":"DOCUMENT",
+    ".txt":"DOCUMENT",
+    ".rtf":"DOCUMENT",
+    ".odt":"DOCUMENT",
+    ".xls":"DOCUMENT",
+    ".xlsx":"DOCUMENT",
+    ".csv":"DOCUMENT",
+    ".ppt":"DOCUMENT",
+    ".pptx":"DOCUMENT",
+
+
+    ".htm":"HTML-DOCUMENT",
+    ".html":"HTML-DOCUMENT",
+    ".php.html":"HTML-DOCUMENT",
+
+
+    ".apk":"APPLICATIONS",
+
+
+    ".wav":"SONGS",
+    ".aiff":"SONGS",
+    ".pcm":"SONGS",
+    ".flac":"SONGS",
+    ".alac":"SONGS",
+    ".mp3":"SONGS",
+    ".mp4":"SONGS",
+    ".aac":"SONGS",
+    ".m4a":"SONGS",
+    ".wma":"SONGS",
+
+    ".py":"PYTHON_SCRIPTS",
+    ".js":"JAVASCRIPT",
+    ".jsx":"JAVASCRIPT",
+    ".cjs":"JAVASCRIPT",
+    ".mjs":"JAVASCRIPT",
+    ".tsx":"JAVASCRIPT",
+    ".cpp":"C/C++",
+
+    ".ics":"CALENDER",
+    ".ics":"SCHEDULING",
+    ".pkg":"PACKAGES",
+    
+
+
+}
+ 
+contents=os.listdir(download_directory)#lists all the files in the directory
+print("------------Transfering begins-------------")
+for item in download_directory.iterdir():#iterates through each file in that directory
+    if item.is_file():#as we care only about files
+
+    
+      
+        file_extension=item.suffix.lower()#as all extensions are in lowercase
+        
+        if file_extension in File_extension:
+            category_name=File_extension[file_extension]#get file extension inside our dictionary
+            category_path=download_directory/category_name
+            category_path.mkdir(exist_ok=True)#creates a new directory if it's absent
+            new_path=category_path/item.name
+            
+            
+            try:
+                shutil.move(item,new_path)
+                print(f"{item} moved to -->{new_path}")
+                modification_time=os.path.getmtime(new_path)
+                print(f"The file: {new_path} was last modified at: {time.ctime(modification_time)}")
+                days_to_keep=100
+                limit=days_to_keep*86400#86400 seconds
+                current_time=time.time()
+                
+                age_of_file=current_time-modification_time
+                if (age_of_file) > limit:
+                    archive_directory = download_directory / "Archive_files"
+                    archive_directory.mkdir(exist_ok=True)
+                    
+                    # --- STEP 3: ARCHIVE (If old) ---
+                    final_destination = archive_directory / item.name
+                    
+                    # Move 2: Archive it
+                    shutil.move(new_path, final_destination)
+                    print(f" File is old ({int((age_of_file)/86400)} days). Moved to Archive folder.")
+                    
+                else:
+                    print(f"File is recently added . Keeping in {category_name}.")
+                Question=input("Do you want to delete the archived files: ")
+                answer=Question.lower()
+                if answer=="yes":
+                    try:
+                        final_destination.rmdir() # This is the pathlib version of os.rmdir
+                        print("Cleaned up empty Archive folder.")
+                    except OSError:
+                        # This happens if files are still inside, which is good!
+                        print("Archive folder still has files, keeping it.")
+                else:
+                    print("Files are still with you!!!!!")
+                
+
+                        
+                        
+
+
+            except OSError as e:
+                print(f"Failed to move{item}")
+        else:
+             print(f"Failed!!!: Extension not in dictionary")
+        
+           
+print("------------Current working Directory-------------")
+print("Your current working directory is : ",os.getcwd())       
+
+
