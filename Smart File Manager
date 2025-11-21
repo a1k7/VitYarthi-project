@@ -106,20 +106,22 @@ for item in download_directory.iterdir():#iterates through each file in that dir
                     # Move 2: Archive it
                     shutil.move(new_path, final_destination)
                     print(f" File is old ({int((age_of_file)/86400)} days). Moved to Archive folder.")
+                    Question=input("Do you want to delete the archived files: ")
+                    answer=Question.lower()
+                    if answer=="yes":
+                       try:
+                           final_destination.rmdir() # This is the pathlib version of os.rmdir
+                           print("Cleaned up empty Archive folder.")
+                       except OSError:
+                        # This happens if files are still inside, which is good!
+                           print("Archive folder still has files, keeping it.")
+                    else:
+                       print("Files are still with you!!!!!")
                     
                 else:
                     print(f"File is recently added . Keeping in {category_name}.")
-                Question=input("Do you want to delete the archived files: ")
-                answer=Question.lower()
-                if answer=="yes":
-                    try:
-                        final_destination.rmdir() # This is the pathlib version of os.rmdir
-                        print("Cleaned up empty Archive folder.")
-                    except OSError:
-                        # This happens if files are still inside, which is good!
-                        print("Archive folder still has files, keeping it.")
-                else:
-                    print("Files are still with you!!!!!")
+                
+                
                 
 
                         
