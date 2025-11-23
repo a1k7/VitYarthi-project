@@ -42,9 +42,8 @@ Clone the repo and open the script. You **must** customize the target path varia
 
 python
 # LOCATE THIS LINE IN THE CODE:
-download_directory = home_directory / "Downloads" 
-# OR
-download_directory = home_directory / "OneDrive" / "Your_Folder"
+root_directory = Path.home() / "Library/CloudStorage/OneDrive-Personal/vit stuff"
+archive_spot = root_directory / "Old_Stored_Items"
 
 ### 3. Execution
 Navigate to the directory via your terminal and trigger the script:
