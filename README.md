@@ -1,7 +1,7 @@
 # SmartDir: Intelligent File Organization System
 
 ## 📖 Project Overview
-Managing a chaotic "Downloads" or workspace folder is a repetitive task that wastes valuable time. **SmartDir** is a Python-based automation utility designed to eliminate digital clutter. Unlike basic sorters, this script employs a dual-layer organization strategy: first, it maps files to specific semantic categories (like Images, Code, or Music) based on their extensions. Second, it applies a **temporal filter**, identifying files that have been dormant (unmodified) for over 100 days and migrating them to a dedicated "Archive" sector. This ensures your active workspace remains relevant and clean.
+Managing a chaotic "Downloads" or workspace folder is a repetitive task that wastes valuable time. **SmartDir** is a Python-based automation utility designed to eliminate digital clutter. Unlike basic sorters, this script employs a dual-layer organization strategy: first, it maps files to specific semantic categories (like Images, Code, or Music) based on their extensions. Second, it applies a **temporal filter**, identifying files that have been dormant (unmodified) for over 100 days (or user can define for how many days he could keep files in in his normal directory)and migrating them to a dedicated "Archive" sector. This ensures your active workspace remains relevant and clean.
 
 ## 🚀 Key Features
 * **Dictionary-Based Sorting:** Utilizes a robust Hash Map (Dictionary) to link over 40+ file extensions (e.g., `.py`, `.docx`, `.flac`) to their respective parent categories.
