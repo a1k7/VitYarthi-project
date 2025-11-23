@@ -30,7 +30,7 @@ The core engine of this project relies on `pathlib` for efficient filesystem tra
 | **Core Logic** | **Python 3.x** | The backbone of the automation script. |
 | **Filesystem** | **pathlib** & **os** | Object-oriented path handling and OS-level interactions. |
 | **Operations** | **shutil** | High-level file operations (Moving, removing directories). |
-| **Timing** | **time** module | Epoch timestamp calculations for the 100-day logic. |
+| **Timing** | **time** module and datetime module | Epoch timestamp calculations for the 100-day logic. |
 
 ## 💻 Steps to Install & Run
 
