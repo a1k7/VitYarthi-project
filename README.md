@@ -1,7 +1,7 @@
 # SmartDir: Intelligent File Organization System
 
 ## 📖 Project Overview
-Managing a chaotic "Downloads" or workspace folder is a repetitive task that wastes valuable time. **SmartDir** is a Python-based automation utility designed to eliminate digital clutter. Unlike basic sorters, this script employs a dual-layer organization strategy: first, it maps files to specific semantic categories (like Images, Code, or Music) based on their extensions. Second, it applies a **temporal filter**, identifying files that have been dormant (unmodified) for over 100 days (or user can define for how many days he could keep files in in his normal directory)and migrating them to a dedicated "Archive" sector. This ensures your active workspace remains relevant and clean.
+Managing a chaotic "Downloads" or any workspace folder is a repetitive task that wastes valuable time. **SmartDir** is a Python-based automation utility designed to eliminate digital clutter. Unlike basic sorters, this script employs a dual-layer organization strategy: first, it maps files to specific semantic categories (like Images, Code, or Music) based on their extensions. Second, it applies a **temporal filter**, identifying files that have been dormant (unmodified) for over that many days user wants to keep it and migrating them to a dedicated "Archive" sector if it exceeds the days limit specified by the user. This ensures your active workspace remains relevant and clean.
 
 ## 🚀 Key Features
 * **Dictionary-Based Sorting:** Utilizes a robust Hash Map (Dictionary) to link over 40+ file extensions (e.g., `.py`, `.docx`, `.flac`) to their respective parent categories.
@@ -15,12 +15,12 @@ The core engine of this project relies on `pathlib` for efficient filesystem tra
 1.  **The `iterdir()` Traversal:**
     Instead of loading all file paths into memory at once, the script uses a generator loop:
     ```python
-    for item in root_directory.iterdir():
+    for entry in root_directory.iterdir():
     ```
     This iterates through the directory entries one by one, ensuring low memory usage even in folders with thousands of files.
 
 2.  **Condition-Based Pipeline:** Inside the loop, every item passes through a filter:
-    * **Is it a file?** (`item.is_file()`) -> specific extensions are extracted.
+    * **Is it a file?** (`entry.is_file()`) -> specific extensions are extracted.
     * **Map & Move:** The extension acts as a key to look up the destination folder. If the folder is missing, `mkdir(exist_ok=True)` handles it dynamically.
     * **Age Assessment:** The loop immediately checks the file's age after moving it. If `(Current_Time - Last_Modified) > 100 Days`, a secondary move triggers, shifting the file to the Archive.
 
@@ -42,12 +42,13 @@ Clone the repo and open the script. You **must** customize the target path varia
 
 python
 # LOCATE THIS LINE IN THE CODE:
-root_directory = Path.home() / "Library/CloudStorage/OneDrive-Personal/vit stuff"
+root_directory = Path.home() / "path"(Here, path is user specified as user can give the path of his/her folder which he/she wants to sort.)
 archive_spot = root_directory / "Old_Stored_Items"
 
 ### 3. Execution
+Save code as a plain text on your device.
 Navigate to the directory via your terminal and trigger the script:
-python sort_files.py
+python your_filename.py
 
 ### 4. 🧪 Instructions for Testing
 a)Mock Data Creation: Create a temporary folder and place a mix of files inside (e.g., a .jpg image, a .pdf document, and a .mp3 file).
