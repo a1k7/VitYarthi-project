@@ -15,7 +15,7 @@ The core engine of this project relies on `pathlib` for efficient filesystem tra
 1.  **The `iterdir()` Traversal:**
     Instead of loading all file paths into memory at once, the script uses a generator loop:
     ```python
-    for item in download_directory.iterdir():
+    for item in root_directory.iterdir():
     ```
     This iterates through the directory entries one by one, ensuring low memory usage even in folders with thousands of files.
 
