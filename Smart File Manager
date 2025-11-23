@@ -7,7 +7,6 @@ from datetime import datetime
 # ============================================================
 # INITIAL SETUP
 # ============================================================
-
 root_directory = Path.home() / "Library/CloudStorage/OneDrive-Personal/vit stuff"
 archive_spot = root_directory / "Old_Stored_Items"
 keep_limit = int(input("Please enter how old files smardir must move to archive folder"))  # days before archiving
