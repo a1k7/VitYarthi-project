@@ -5,11 +5,12 @@ from pathlib import Path
 from datetime import datetime
 
 # ============================================================
-# INITIAL SETUP
+# INITIAL SETUP"path of folder you want to sort."
 # ============================================================
-root_directory = Path.home() / "Library/CloudStorage/OneDrive-Personal/vit stuff"
+path=input("Enter the path of your folder you want to sort:  ")
+root_directory = Path.home() / path
 archive_spot = root_directory / "Old_Stored_Items"
-keep_limit = int(input("Please enter how old files smardir must move to archive folder"))  # days before archiving
+keep_limit = int(input("Please enter how old files smardir must move to archive folder:  "))  # days before archiving
 
 # Category description block (unique structure)
 sorting_rules = {
