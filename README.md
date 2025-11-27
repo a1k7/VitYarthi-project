@@ -1,51 +1,43 @@
-# SmartDir: Intelligent File Organization System
+# SmartDir: Intelligent Modular File Organizer
 
 ## 📖 Project Overview
-Managing a chaotic "Downloads" folder is a repetitive task that wastes valuable time. **SmartDir** is a modular Python-based automation utility designed to eliminate digital clutter. 
+**SmartDir** is a robust Python automation utility designed to eliminate digital clutter. It transforms chaotic folders (like Downloads) into structured workspaces without manual intervention.
 
-Unlike basic scripts, this project uses a **multi-module architecture** to employ a dual-layer organization strategy:
-1. **Semantic Categorization:** Maps files to categories (Images, Code, Music) based on extensions.
-2. **Temporal Archiving:** Identifies files unmodified for over **100 days** and migrates them to a dedicated "Archive" sector to keep the active workspace clean.
+This project utilizes a **Modular Architecture**, splitting logic into distinct components (Sorting, Archiving, Configuration) to ensure scalability and maintainability. It employs a dual-layer strategy:
+1.  **Semantic Sorting:** Immediately categorizes files into folders (e.g., `IMAGES`, `DOCS`) based on extensions.
+2.  **Temporal Archiving:** Identifies files older than a user-defined limit (e.g., 100 days) and offers to either **Archive** or **Delete** them to free up space.
 
 ## 🚀 Key Features
-* **Modular Design:** Logic is split across 5 distinct modules (`main`, `sorter`, `archiver`, etc.) for scalability and maintainability.
-* **Dictionary-Based Sorting:** Uses a robust Hash Map in `config.py` to link 40+ file extensions to parent categories.
-* **Temporal Filter:** Automatically calculates file age and moves dormant files (>100 days) to an archive folder.
-* **Safe Execution:** Implements `try-except` blocks in `sorter.py` and `archiver.py` to handle permission errors gracefully.
+* **Modular Codebase:** Logic is distributed across 5 specialized modules (`sorter`, `archiver`, etc.) for better readability and debugging.
+* **Dictionary-Based Mapping:** Uses a configurable Hash Map in `config.py` to link 40+ extensions to 7 distinct categories.
+* **Interactive Lifecycle Management:** The system calculates file age and asks the user for permission before deleting or archiving old files.
+* **Collision Handling:** Automatically renames duplicate files with a timestamp (e.g., `image_20231127.jpg`) to prevent data loss.
+* **Cross-Platform:** Built on `pathlib` to work seamlessly on Windows, macOS, and Linux.
 
 ## 📂 Project Structure
-The project is organized into the following modules to ensure separation of concerns:
+The solution is engineered into **5 meaningful modules** to satisfy architectural requirements:
 
-| File | Purpose |
+| Module | Description |
 | :--- | :--- |
-| **`main.py`** | The entry point. Orchestrates the workflow by connecting all other modules. |
-| **`config.py`** | Stores configuration constants (Extension mappings, Age limits) for easy editing. |
-| **`sorter.py`** | Handles the core logic of moving files from the root to category folders. |
-| **`archiver.py`** | Contains the time-decay algorithm to identify and move old files. |
-| **`utils.py`** | Helper functions for directory creation and extension validation. |
+| **`main.py`** | **Entry Point.** Orchestrates the user input and calls the sorter/archiver. |
+| **`config.py`** | **Settings.** Stores extension rules and folder names. |
+| **`sorter.py`** | **Logic.** Handles file categorization and physical movement. |
+| **`archiver.py`** | **Logic.** Calculates file age and handles the "Archive vs Delete" decision. |
+| **`utils.py`** | **Helpers.** Contains shared functions for timestamping and path validation. |
 
-## ⚙️ Logic Flow
-1.  **Scan:** `main.py` iterates through the directory using `iterdir()` for memory efficiency.
-2.  **Sort:** `sorter.py` moves the file to a category folder (e.g., `/IMAGE`) based on `config.py`.
-3.  **Check Age:** Immediately after sorting, `archiver.py` checks if `(Current Time - Mod Time) > 100 Days`.
-4.  **Archive:** If old, the file is moved again to `/Archive_files`.
+## 🛠️ Technologies Used
+* **Language:** Python 3.x
+* **Libraries:** `os`, `shutil`, `pathlib`, `datetime`, `time` (Standard Library)
 
-## 💻 Installation & Usage
+## 💻 Steps to Install & Run
 
 ### 1. Prerequisites
-* Python 3.x installed.
-* No external libraries required (Uses standard `os`, `shutil`, `pathlib`, `time`).
-
-### 2. Configuration
-1.  Open `main.py`.
-2.  Update the `download_directory` variable to point to the folder you want to clean:
-    ```python
-    # In main.py
-    download_directory = home_directory / "Your/Target/Path/Here"
-    ```
-3.  (Optional) Open `config.py` to add new file extensions or change the 100-day limit.
-
-### 3. Execution
-Navigate to the project folder in your terminal and run the main script:
+Ensure you have Python installed. You can verify this in your terminal:
 ```bash
+python --version
+
+### 2. Installation
+cd SmartDir_Project
+
+### 3. Usage:
 python main.py
