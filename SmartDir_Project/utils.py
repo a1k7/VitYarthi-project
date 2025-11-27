@@ -1,17 +1,21 @@
 # utils.py
-import os
-from pathlib import Path
-from config import File_extension
+from datetime import datetime
+from config import SORTING_RULES
 
-def get_category(item):
-    """Checks if file extension exists in our dictionary"""
-    ext = item.suffix.lower()
-    if ext in File_extension:
-        return File_extension[ext]
+def get_category(extension):
+    """Finds the dictionary key for a given extension."""
+    for label, ext_list in SORTING_RULES.items():
+        if extension in ext_list:
+            return label
     return None
 
-def create_folder(parent_path, folder_name):
-    """Creates directory if absent"""
-    category_path = parent_path / folder_name
-    category_path.mkdir(exist_ok=True)
-    return category_path
+def get_unique_path(target_path):
+    """
+    If a file exists, appends a timestamp to make the name unique.
+    Returns the new unique path.
+    """
+    if target_path.exists():
+        stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        # Rename: filename_timestamp.ext
+        return target_path.with_name(f"{target_path.stem}_{stamp}{target_path.suffix}")
+    return target_path
