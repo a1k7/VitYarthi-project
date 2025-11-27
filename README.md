@@ -41,3 +41,39 @@ cd SmartDir_Project
 
 ### 3. Usage:
 python main.py
+
+
+Follow the on-screen prompts:
+
+Enter Path: Type the relative path from your home folder (e.g., Downloads or Desktop/MyFiles).
+
+Enter Days Limit: Define how many days a file must be dormant before archiving (e.g., 30 or 100).
+
+🧪 Instructions for Testing
+To verify the system functionality:
+
+Create Mock Data: Create a test folder named Test_Data and fill it with random files (test.jpg, doc.pdf, old_song.mp3).
+
+Run the Script: Execute python main.py.
+
+Input Path: Enter Test_Data.
+
+Input Age: Enter 0 (zero) to force the system to treat all files as "Old".
+
+Verify Sorting: Check if IMAGE, DOCS, and AUDIO folders were created.
+
+Verify Archiving: The script will ask to Delete/Archive. Type no to archive. Check if the Old_Stored_Items folder contains the files.
+
+
+
+📸 Configuration
+You can customize the sorting rules by editing config.py::
+# config.py
+SORTING_RULES = {
+    "NEW_CATEGORY": [".xyz", ".abc"],
+    # ... existing rules
+}
+
+Developed by: Akhilesh Warik
+
+Registration No: 25BAI10078
