@@ -1,19 +1,33 @@
 # sorter.py
 import shutil
-import os
-import time
+import utils
 
-def move_to_category(item, category_path):
-    """Moves file to the category folder"""
-    new_path = category_path / item.name
+def process_file_sort(entry, root_directory):
+    """
+    Moves a file to its category folder. 
+    Returns the new path if successful, or None if skipped/failed.
+    """
+    extension = entry.suffix.lower()
+    category_found = utils.get_category(extension)
+
+    # Skip uncategorized
+    if category_found is None:
+        print(f"[UNSORTED] {entry.name} — ignored")
+        return None
+
+    # Create category folder
+    target_folder = root_directory / category_found
+    if not target_folder.exists():
+        target_folder.mkdir(parents=True, exist_ok=True)
+
+    # Handle duplicates
+    raw_location = target_folder / entry.name
+    new_location = utils.get_unique_path(raw_location)
+
     try:
-        shutil.move(item, new_path)
-        print(f"{item} moved to -->{new_path}")
-        
-        # Return new path and mod time for the archiver to use
-        modification_time = os.path.getmtime(new_path)
-        print(f"The file: {new_path} was last modified at: {time.ctime(modification_time)}")
-        return new_path, modification_time
-    except OSError as e:
-        print(f"Failed to move{item}")
-        return None, None
+        shutil.move(entry, new_location)
+        print(f"[PLACED] {entry.name}  -> {category_found}")
+        return new_location
+    except Exception as e:
+        print(f"[ERROR] Moving {entry.name}: {e}")
+        return None
