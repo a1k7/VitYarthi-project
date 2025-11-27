@@ -22,5 +22,5 @@ File_extension = {
 }
 
 # Your time limit logic
-DAYS_TO_KEEP = 100
+DAYS_TO_KEEP = int(input("Enter after how many days you want move your files to Archive."))
 LIMIT_SECONDS = DAYS_TO_KEEP * 86400
