@@ -1,48 +1,47 @@
 # main.py
 import os
 from pathlib import Path
-import config
-import utils
 import sorter
 import archiver
 
 def main():
-    home_directory = Path.home()
-    # Your specific path
-    download_directory = home_directory / "Library/CloudStorage/OneDrive-Personal/vit stuff"
+    print("=========================================")
+    print("      SMARTDIR - MODULAR EDITION         ")
+    print("=========================================")
+
+    # 1. User Input
+    path_input = input("Enter the path of your folder you want to sort: ")
     
-    # Validation to prevent crash if path doesn't exist on grading machine
-    if not download_directory.exists():
-        print(f"Directory not found: {download_directory}")
+    # Path Handling
+    root_directory = Path.home() / path_input
+    
+    if not root_directory.exists():
+        print(f"Error: The path '{root_directory}' does not exist.")
         return
 
-    print("------------Transfering begins-------------")
-    
-    # Iterate through each file
-    for item in download_directory.iterdir():
-        if item.is_file():
-            
-            # 1. Get Category
-            category_name = utils.get_category(item)
-            
-            if category_name:
-                # 2. Create Folder
-                category_path = utils.create_folder(download_directory, category_name)
-                
-                # 3. Move File
-                new_path, mod_time = sorter.move_to_category(item, category_path)
-                
-                # 4. Check Archive (Only if move was successful)
-                if new_path:
-                    archiver.check_and_archive(new_path, mod_time, download_directory)
-            else:
-                print("Files are still with you!!!!!")
-        else:
-            # Note: This prints for every folder found, preserving your original logic
-            pass 
+    try:
+        keep_limit = int(input("Enter days limit before archiving/deleting: "))
+    except ValueError:
+        print("Invalid number. Defaulting to 100 days.")
+        keep_limit = 100
 
-    print("------------Current working Directory-------------")
-    print("Your current working directory is : ", os.getcwd())
+    print("\n--------- PROCESS STARTED ---------\n")
+
+    # 2. Main Loop
+    # We use list() to avoid issues if files are moved while iterating
+    all_files = [f for f in root_directory.iterdir() if f.is_file()]
+
+    for entry in all_files:
+        
+        # Step A: Sort the file
+        new_path = sorter.process_file_sort(entry, root_directory)
+        
+        # Step B: Check age (only if sorting was successful)
+        if new_path:
+            archiver.process_age_check(new_path, root_directory, keep_limit)
+
+    print("\n--------- PROCESS COMPLETE ---------\n")
+    print("Current working directory:", os.getcwd())
 
 if __name__ == "__main__":
     main()
